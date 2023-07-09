@@ -8,7 +8,7 @@ export const Button = styled.button`
   font-size: 18px;
   line-height: 24px;
   font-weight: 700;
-  background-color: #3c4eb4;
+  background-color: #4455b4;
   cursor: pointer;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
     10px 10px 12px 0px rgba(0, 0, 0, 0.2), 0px 5px 5px 0px rgba(0, 0, 0, 0.2);
