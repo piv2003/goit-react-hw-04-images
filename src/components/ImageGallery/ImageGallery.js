@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { fetchImages } from '../App/App';
 import { ImageGalleryBox } from './ImageGallery.styled';
