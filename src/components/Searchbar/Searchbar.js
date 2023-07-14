@@ -13,28 +13,13 @@ import {
 const initialValues = { query: '' };
 const userSchema = object({ query: string() });
 
-  handleChange = e => {
-    this.setState({
-      newSearchQuery: e.currentTarget.value.trim(),
-    });
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const newImageQuery = this.state.newSearchQuery;
-    if (newImageQuery === '') {
-      return toast.warning('Please enter a search term');
-    }
-    if (newImageQuery === this.props.searchQuery) {
-      toast.info('Enter another request');
-    }
-    if (newImageQuery !== this.props.searchQuery) {
-      this.props.onSubmit(newImageQuery);
-      this.setState({
-        newSearchQuery: '',
-      });
-    }
-  };
+  export default function SearchBar({
+  searchQuery,
+  setSearchQuery,
+  setIsBtnLoadMoreVisible,
+  resetPage,
+  resetImages,
+}) 
 
   render() {
     const { newSearchQuery } = this.state;
