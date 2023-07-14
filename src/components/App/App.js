@@ -42,17 +42,17 @@ export default function App() {
       .then(images => {
         setImages(prevImages => [...prevImages, ...images.hits]);
         setStatus(Status.RESOLVED);
-        setTotal(images.total);        
+        setTotal(images.total);
       })
       .catch(() => {
         setStatus(Status.REJECTED);
       });
   }, [searchQuery, page]);
 
-useEffect(() => {
+  useEffect(() => {
     if (status !== Status.RESOLVED) return;
     if (images.length === 0) {
-      setStatus(Status.REJECTED);      
+      setStatus(Status.REJECTED);
       toast.error(`Oops! Nothing found. Enter another request`);
       return;
     }
@@ -61,34 +61,22 @@ useEffect(() => {
       toast.success(`Success! Found ${total} images`);
     }
     if (total <= images.length && page !== 1) {
-      setStatus(Status.REJECTED);      
+      setStatus(Status.REJECTED);
       toast.warning("Sorry, there's nothing more to show");
     }
   }, [status, page, images, total]);
 
-
-
-
-
-  render() {
-    const { searchQuery, imgUrl, tags, showModal } = this.state;
-    return (
-      <Wrapper>
-        <Searchbar onSubmit={this.handleSubmit} searchQuery={searchQuery} />
-        <ImageGallery
-          onCardClick={this.onCardClick}
-          searchQuery={searchQuery}
-          onOpenModal={this.toggleModal}
-        />
-        {showModal && (
-          <Modal onCloseModal={this.toggleModal}>
-            {<img src={imgUrl} alt={tags} />}
-          </Modal>
-        )}
-        <ToastContainer autoClose={2500} theme="dark" />
-      </Wrapper>
-    );
-  }
+  return (
+    <Wrapper>
+      <Searchbar
+        setSearchQuery={setSearchQuery}
+        searchQuery={searchQuery}
+        resetPage={setPage}
+        resetImages={setImages}
+      />
+      <ImageGallery images={images} page={page} />
+      {status === Status.PENDING && <Loader />}
+      <ToastContainer autoClose={2500} theme="dark" />
+    </Wrapper>
+  );
 }
-
-export default App;
