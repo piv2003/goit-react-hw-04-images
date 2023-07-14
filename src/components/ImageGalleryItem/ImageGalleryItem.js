@@ -1,18 +1,11 @@
 import { useState } from 'react';
-import { ImageItem } from './ImageGalleryItem.styled';
 import PropTypes from 'prop-types';
+import { ImageItem } from './ImageGalleryItem.styled';
+import { Modal } from 'components/Modal';
 
-const ImageGalleryItem = ({ smallImageURL, tags }) => {
-  return (
-    <ImageItem>
-      <img src={smallImageURL} alt={tags} />
-    </ImageItem>
-  );
-};
-
-ImageGalleryItem.propTypes = {
-  smallImageURL: PropTypes.string.isRequired,
-  tags: PropTypes.string.isRequired,
-};
-
-export default ImageGalleryItem;
+export default function ImageGalleryItem({
+  tags,
+  smallImageURL,
+  largeImageURL,
+}) {
+  const [showModal, setShowModal] = useState(false);

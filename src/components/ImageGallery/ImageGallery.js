@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { fetchImages } from '../App/App';
 import { ImageGalleryBox } from './ImageGallery.styled';
-import ImageGalleryItem from 'components/ImageGalleryItem';
-import ButtonLoadMore from 'components/Button';
-import Loader from 'components/Loader';
+import { ImageGalleryItem } from 'components/ImageGalleryItem';
+import { ButtonLoadMore } from 'components/Button';
+import { Loader } from 'components/Loader';
 import { toast } from 'react-toastify';
 
 const Status = {
