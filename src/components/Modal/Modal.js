@@ -13,7 +13,7 @@ export default function Modal({ onCloseModal, imgUrl, tags }) {
       }
     }
     window.addEventListener('keydown', handleEscDown);
-return () => {
+    return () => {
       window.removeEventListener('keydown', handleEscDown);
     };
   }, [onCloseModal]);
@@ -23,7 +23,15 @@ return () => {
       onCloseModal();
     }
   }
-
+  return createPortal(
+    <Overlay onClick={handleBackdropClick}>
+      <ModalBox>
+        <img src={imgUrl} alt={tags} />
+      </ModalBox>
+    </Overlay>,
+    modalRoot
+  );
+}
 
 Modal.propTypes = {
   onCloseModal: PropTypes.func.isRequired,
