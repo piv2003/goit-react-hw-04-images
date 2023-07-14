@@ -9,3 +9,15 @@ export default function ImageGalleryItem({
   largeImageURL,
 }) {
   const [showModal, setShowModal] = useState(false);
+
+  return (
+    <>
+      <ImageItem onClick={toggleModal}>
+        <img src={smallImageURL} alt={tags} />
+      </ImageItem>
+      {showModal && (
+        <Modal onCloseModal={toggleModal} imgUrl={largeImageURL} tags={tags} />
+      )}
+    </>
+  );
+}
