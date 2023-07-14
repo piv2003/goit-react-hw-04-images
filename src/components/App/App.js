@@ -21,6 +21,13 @@ export const fetchImages = async (pageNum = 1, searchQuerry = '') => {
   return response.data;
 };
 
+const Status = {
+  IDLE: 'idle',
+  PENDING: 'pending',
+  RESOLVED: 'resolved',
+  REJECTED: 'rejected',
+};
+
 class App extends Component {
   state = {
     searchQuery: '',
