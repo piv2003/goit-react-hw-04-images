@@ -51,25 +51,20 @@ export default function App() {
 
 useEffect(() => {
     if (status !== Status.RESOLVED) return;
-
     if (images.length === 0) {
-      setStatus(Status.REJECTED);
-      /* setIsBtnLoadMoreVisible(false); */
+      setStatus(Status.REJECTED);      
       toast.error(`Oops! Nothing found. Enter another request`);
       return;
     }
-
-    if (totalHits > 0 && page === 1 && images.length > 0) {
+    if (total > 0 && page === 1 && images.length > 0) {
       setStatus(Status.IDLE);
-      toast.success(`Success! Found ${totalHits} images`);
+      toast.success(`Success! Found ${total} images`);
     }
-
-    if (totalHits <= images.length && page !== 1) {
-      setStatus(Status.REJECTED);
-      /* setIsBtnLoadMoreVisible(false); */
+    if (total <= images.length && page !== 1) {
+      setStatus(Status.REJECTED);      
       toast.warning("Sorry, there's nothing more to show");
     }
-  }, [status, page, images, totalHits]);
+  }, [status, page, images, total]);
 
 
 
