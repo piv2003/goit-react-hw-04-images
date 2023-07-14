@@ -13,39 +13,56 @@ import {
 const initialValues = { query: '' };
 const userSchema = object({ query: string() });
 
-  export default function SearchBar({
+export default function SearchBar({
   searchQuery,
   setSearchQuery,
   setIsBtnLoadMoreVisible,
   resetPage,
   resetImages,
-}) 
-
-  render() {
-    const { newSearchQuery } = this.state;
-    return (
-      <SearchbarBox>
-        <SearchForm onSubmit={this.handleSubmit}>
+}) {
+  function handleSubmit({ query }, { resetForm }) {
+    const currentQuery = query.trim();
+    if (currentQuery === '') {
+      toast.warning('Please enter your request');
+      return;
+    }
+    if (searchQuery !== currentQuery && currentQuery !== '') {
+      setSearchQuery(query);
+      setIsBtnLoadMoreVisible(true);
+      resetPage(1);
+      resetImages([]);
+      resetForm();
+    }
+  }
+  return (
+    <SearchbarBox>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={userSchema}
+      >
+        <SearchForm>
           <SearchButton type="submit">
             <GoSearch />
           </SearchButton>
           <SearchbarInput
             type="text"
-            autocomplete="off"
+            name="query"
+            autoComplete="off"
             autoFocus
-            placeholder="Search Images and photos"
-            value={newSearchQuery}
-            onChange={this.handleChange}
+            placeholder="Search images and photos"
           />
+          <ErrorMessage name="query" />
         </SearchForm>
-      </SearchbarBox>
-    );
-  }
+      </Formik>
+    </SearchbarBox>
+  );
 }
 
-Searchbar.propTypes = {
+SearchBar.propTypes = {
   searchQuery: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  setSearchQuery: PropTypes.func.isRequired,
+  setIsBtnLoadMoreVisible: PropTypes.func.isRequired,
+  resetPage: PropTypes.func.isRequired,
+  resetImages: PropTypes.func.isRequired,
 };
-
-export default Searchbar;
