@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { ErrorMessage, Formik } from 'formik';
+import { object, string } from 'yup';
 import { GoSearch } from 'react-icons/go';
 import { toast } from 'react-toastify';
 import {
@@ -8,10 +10,8 @@ import {
   SearchForm,
 } from './Searchbar.styled';
 
-class Searchbar extends Component {
-  state = {
-    newSearchQuery: '',
-  };
+const initialValues = { query: '' };
+const userSchema = object({ query: string() });
 
   handleChange = e => {
     this.setState({
