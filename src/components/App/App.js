@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageGallery from 'components/ImageGallery';
 import Searchbar from 'components/Searchbar';
-import Modal from 'components/Modal';
+import Loader from 'components/Loader';
 import { Wrapper } from './App.styled';
 
 export const fetchImages = async (pageNum = 1, searchQuerry = '') => {
@@ -38,7 +38,7 @@ export default function App() {
   useEffect(() => {
     if (searchQuery === '') return;
     setStatus(Status.PENDING);
-    fetchImagesByName(page, searchQuery)
+    fetchImages(page, searchQuery)
       .then(images => {
         setImages(prevImages => [...prevImages, ...images.hits]);
         setStatus(Status.RESOLVED);
