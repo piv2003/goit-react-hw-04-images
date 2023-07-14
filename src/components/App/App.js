@@ -49,9 +49,29 @@ export default function App() {
       });
   }, [searchQuery, page]);
 
+useEffect(() => {
+    if (status !== Status.RESOLVED) return;
+
+    if (images.length === 0) {
+      setStatus(Status.REJECTED);
+      /* setIsBtnLoadMoreVisible(false); */
+      toast.error(`Oops! Nothing found. Enter another request`);
+      return;
+    }
+
+    if (totalHits > 0 && page === 1 && images.length > 0) {
+      setStatus(Status.IDLE);
+      toast.success(`Success! Found ${totalHits} images`);
+    }
+
+    if (totalHits <= images.length && page !== 1) {
+      setStatus(Status.REJECTED);
+      /* setIsBtnLoadMoreVisible(false); */
+      toast.warning("Sorry, there's nothing more to show");
+    }
+  }, [status, page, images, totalHits]);
 
 
-  
 
 
 
