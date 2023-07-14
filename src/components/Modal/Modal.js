@@ -13,6 +13,16 @@ export default function Modal({ onCloseModal, imgUrl, tags }) {
       }
     }
     window.addEventListener('keydown', handleEscDown);
+return () => {
+      window.removeEventListener('keydown', handleEscDown);
+    };
+  }, [onCloseModal]);
+
+  function handleBackdropClick(evt) {
+    if (evt.currentTarget === evt.target) {
+      onCloseModal();
+    }
+  }
 
 
 Modal.propTypes = {
