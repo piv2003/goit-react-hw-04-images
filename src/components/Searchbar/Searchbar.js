@@ -12,7 +12,6 @@ import {
 
 const initialValues = { query: '' };
 const userSchema = object({ query: string() });
-
 export default function SearchBar({
   searchQuery,
   setSearchQuery,
