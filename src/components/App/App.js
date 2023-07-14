@@ -28,13 +28,18 @@ const Status = {
   REJECTED: 'rejected',
 };
 
-class App extends Component {
-  state = {
-    searchQuery: '',
-    imgUrl: '',
-    tags: '',
-    showModal: false,
-  };
+export default function App() {
+  const [status, setStatus] = useState(Status.IDLE);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [page, setPage] = useState(1);
+  const [images, setImages] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  
+
+
+
+
 
   handleSubmit = searchQuery => {
     this.setState({
