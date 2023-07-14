@@ -35,30 +35,25 @@ export default function App() {
   const [images, setImages] = useState([]);
   const [total, setTotal] = useState(0);
 
+  useEffect(() => {
+    if (searchQuery === '') return;
+    setStatus(Status.PENDING);
+    fetchImagesByName(page, searchQuery)
+      .then(images => {
+        setImages(prevImages => [...prevImages, ...images.hits]);
+        setStatus(Status.RESOLVED);
+        setTotal(images.total);        
+      })
+      .catch(() => {
+        setStatus(Status.REJECTED);
+      });
+  }, [searchQuery, page]);
+
+
+
   
 
 
-
-
-
-  handleSubmit = searchQuery => {
-    this.setState({
-      searchQuery,
-    });
-  };
-
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-    }));
-  };
-
-  onCardClick = (largeImageUrl, imageTags) => {
-    this.setState({
-      imgUrl: largeImageUrl,
-      tags: imageTags,
-    });
-  };
 
   render() {
     const { searchQuery, imgUrl, tags, showModal } = this.state;
