@@ -22,9 +22,12 @@ export default function ImageGallery({ images }) {
 }
 
 ImageGallery.propTypes = {
-  onCardClick: PropTypes.func.isRequired,
-  searchQuery: PropTypes.string.isRequired,
-  onOpenModal: PropTypes.func.isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      tags: PropTypes.string.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
-
-export default ImageGallery;
