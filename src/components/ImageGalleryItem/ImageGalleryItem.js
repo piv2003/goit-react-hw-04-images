@@ -10,6 +10,10 @@ export default function ImageGalleryItem({
 }) {
   const [showModal, setShowModal] = useState(false);
 
+  function toggleModal() {
+    setShowModal(!showModal);
+  }
+
   return (
     <>
       <ImageItem onClick={toggleModal}>
