@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ImageItem } from './ImageGalleryItem.styled';
-import { Modal } from 'components/Modal';
+import { Modal } from 'components/Modal/Modal';
 
 export default function ImageGalleryItem({
   tags,
