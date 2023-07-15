@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import ButtonLoadMore from 'components/Button/Button';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageGallery from 'components/ImageGallery';
 import Searchbar from 'components/Searchbar';
@@ -33,16 +34,21 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
   const [images, setImages] = useState([]);
-  const [total, setTotal] = useState(0);
+  const [totalHits, setTotalHits] = useState(0);
+  const [isBtnLoadMoreVisible, setIsBtnLoadMoreVisible] = useState(false);
 
   useEffect(() => {
     if (searchQuery === '') return;
+
     setStatus(Status.PENDING);
+    setIsBtnLoadMoreVisible(false);
+
     fetchImages(page, searchQuery)
       .then(images => {
         setImages(prevImages => [...prevImages, ...images.hits]);
         setStatus(Status.RESOLVED);
-        setTotal(images.total);
+        setTotalHits(images.totalHits);
+        setIsBtnLoadMoreVisible(true);
       })
       .catch(() => {
         setStatus(Status.REJECTED);
@@ -51,20 +57,29 @@ export default function App() {
 
   useEffect(() => {
     if (status !== Status.RESOLVED) return;
+
     if (images.length === 0) {
       setStatus(Status.REJECTED);
+      setIsBtnLoadMoreVisible(false);
       toast.error(`Oops! Nothing found. Enter another request`);
       return;
     }
-    if (total > 0 && page === 1 && images.length > 0) {
+
+    if (totalHits > 0 && page === 1 && images.length > 0) {
       setStatus(Status.IDLE);
-      toast.success(`Success! Found ${total} images`);
+      toast.success(`Success! Found ${totalHits} images`);
     }
-    if (total <= images.length && page !== 1) {
+
+    if (totalHits <= images.length && page !== 1) {
       setStatus(Status.REJECTED);
+      setIsBtnLoadMoreVisible(false);
       toast.warning("Sorry, there's nothing more to show");
     }
-  }, [status, page, images, total]);
+  }, [status, page, images, totalHits]);
+
+  function onBtnLoadMore() {
+    setPage(prevPage => prevPage + 1);
+  }
 
   return (
     <Wrapper>
@@ -73,8 +88,12 @@ export default function App() {
         searchQuery={searchQuery}
         resetPage={setPage}
         resetImages={setImages}
+        setIsBtnLoadMoreVisible={setIsBtnLoadMoreVisible}
       />
       <ImageGallery images={images} page={page} />
+
+      {isBtnLoadMoreVisible && <ButtonLoadMore onBtnLoadMore={onBtnLoadMore} />}
+
       {status === Status.PENDING && <Loader />}
       <ToastContainer autoClose={2500} theme="dark" />
     </Wrapper>
