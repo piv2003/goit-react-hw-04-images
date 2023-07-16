@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { ErrorMessage, Formik } from 'formik';
 import { object, string } from 'yup';
-import { GoSearch } from 'react-icons/go';
 import { toast } from 'react-toastify';
+import { GoSearch } from 'react-icons/go';
 import {
   SearchbarBox,
   SearchbarInput,
@@ -12,6 +12,7 @@ import {
 
 const initialValues = { query: '' };
 const userSchema = object({ query: string() });
+
 export default function SearchBar({
   searchQuery,
   setSearchQuery,
@@ -21,6 +22,7 @@ export default function SearchBar({
 }) {
   function handleSubmit({ query }, { resetForm }) {
     const currentQuery = query.trim();
+
     if (currentQuery === '') {
       toast.warning('Please enter your request');
       return;
@@ -33,6 +35,7 @@ export default function SearchBar({
       resetForm();
     }
   }
+
   return (
     <SearchbarBox>
       <Formik
@@ -44,6 +47,7 @@ export default function SearchBar({
           <SearchButton type="submit">
             <GoSearch />
           </SearchButton>
+
           <SearchbarInput
             type="text"
             name="query"

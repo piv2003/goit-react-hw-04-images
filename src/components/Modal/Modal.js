@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
+import { createPortal } from 'react-dom';
 import { ModalBox, Overlay } from './Modal.styled';
 
 const modalRoot = document.querySelector('#modal-root');
@@ -13,6 +13,7 @@ export default function Modal({ onCloseModal, imgUrl, tags }) {
       }
     }
     window.addEventListener('keydown', handleEscDown);
+
     return () => {
       window.removeEventListener('keydown', handleEscDown);
     };
@@ -23,6 +24,7 @@ export default function Modal({ onCloseModal, imgUrl, tags }) {
       onCloseModal();
     }
   }
+
   return createPortal(
     <Overlay onClick={handleBackdropClick}>
       <ModalBox>
