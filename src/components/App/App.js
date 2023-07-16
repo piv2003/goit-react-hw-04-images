@@ -34,7 +34,7 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
   const [images, setImages] = useState([]);
-  const [totalHits, setTotalHits] = useState(0);
+  const [total, setTotal] = useState(0);
   const [isBtnLoadMoreVisible, setIsBtnLoadMoreVisible] = useState(false);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function App() {
       .then(images => {
         setImages(prevImages => [...prevImages, ...images.hits]);
         setStatus(Status.RESOLVED);
-        setTotalHits(images.totalHits);
+        setTotal(images.total);
         setIsBtnLoadMoreVisible(true);
       })
       .catch(() => {
@@ -65,17 +65,17 @@ export default function App() {
       return;
     }
 
-    if (totalHits > 0 && page === 1 && images.length > 0) {
+    if (total > 0 && page === 1 && images.length > 0) {
       setStatus(Status.IDLE);
-      toast.success(`Success! Found ${totalHits} images`);
+      toast.success(`Success! Found ${total} images`);
     }
 
-    if (totalHits <= images.length && page !== 1) {
+    if (total <= images.length && page !== 1) {
       setStatus(Status.REJECTED);
       setIsBtnLoadMoreVisible(false);
       toast.warning("Sorry, there's nothing more to show");
     }
-  }, [status, page, images, totalHits]);
+  }, [status, page, images, total]);
 
   function onBtnLoadMore() {
     setPage(prevPage => prevPage + 1);

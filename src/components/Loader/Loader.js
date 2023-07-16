@@ -3,9 +3,9 @@ import { Oval } from 'react-loader-spinner';
 const Loader = () => {
   return (
     <Oval
-      height={150}
-      width={150}
-      color="#374fdd"
+      height={130}
+      width={130}
+      color="#4058df"
       wrapperStyle={{}}
       wrapperClass=""
       visible={true}
